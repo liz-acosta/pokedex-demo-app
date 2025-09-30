@@ -6,6 +6,30 @@
     <title>Minimal Flask App</title>
 </head>
 <body>
-    <h1>Hello, Flask!</h1>
+    {% block content %}
+
+        <div class="container d-flex flex-row flex-wrap justify-content-start align-items-center text-center mt-3">       
+            
+            {% for key, value in attributes_dict.items() %}
+                <form id="{{ key }}" action="/pokemon" method = "POST"></form>
+                
+                <label for="{{ key }}">
+                    Select a Pokemon {{key}} from the menu:
+                </label>
+                
+                <div class="col-6 col-md-4 col-lg-3 p-2">
+                    <select name="{{ key }}" id="{{ key }}" form="{{ key }}" onchange="this.form.submit()">
+                        {% for i in value %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                </form>
+
+            {% endfor %}
+            
+        </div>
+
+    {% endblock %}
 </body>
 </html>
