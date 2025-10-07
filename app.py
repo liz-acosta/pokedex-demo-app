@@ -1,7 +1,9 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap5
 import pokemon
 
 app = Flask(__name__)
+bootstrap = Bootstrap5(app)
 
 @app.route("/")
 def home():
@@ -19,30 +21,17 @@ def home():
 def display_pokemon():
 
     form_data = request.form.to_dict()
-    print(form_data)
     
     pokemon_attribute = list(request.form.keys())[0]
     pokemon_selection = form_data[pokemon_attribute]
-    print(pokemon_attribute)
 
     pokemon_list = pokemon.get_list_by_attribute(pokemon_attribute, pokemon_selection)
-    if request.method == 'POST':
-        print(request.form.keys())
-    return render_template("pokemon.html", pokemon_list=pokemon_list)
-   
-#    else:
-#       user = request.args.get('name')
+    
+    pokemon_dict_list = [pokemon.get_pokemon_by_name(pokemon_name) for pokemon_name in pokemon_list]
 
-#     pokemon.get_list_by_attribute
-#     return render_template("pokemon.html", pokemon=pokemon)
+    print(pokemon_dict_list[0])
 
-# @app.route('/login',methods = ['POST', 'GET'])
-# def login():
-#    if request.method == 'POST':
-#       user = request.form['name']
-#       return redirect(url_for('dashboard',name = user))
-#    else:
-#       user = request.args.get('name')
+    return render_template("pokemon.html", pokemon_dict_list=pokemon_dict_list)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,35 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
-    <title>Minimal Flask App</title>
-</head>
+
+{% extends 'base.html' %}
+
 <body>
     {% block content %}
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
-        <div class="container d-flex flex-row flex-wrap justify-content-start align-items-center text-center mt-3">       
+    <div class="text-center margin-mobile my-4 mx-auto">
+        <h1>Select to see Pokemon according to attribute</h1>
+    </div>
+
+        <div class="container d-flex flex-row flex-wrap justify-content-center align-items-center text-center mt-3">       
             
             {% for key, value in attributes_dict.items() %}
-                <form id="{{ key }}" action="/pokemon" method = "POST"></form>
+            <div class="col-6 col-md-4 col-lg-3 p-2">
+                <form id="{{ key }}" action="/pokemon" method = "POST">
                 
                 <label for="{{ key }}">
-                    Select a Pokemon {{key}} from the menu:
+                    Select a Pokemon {{key}}:
                 </label>
                 
-                <div class="col-6 col-md-4 col-lg-3 p-2">
-                    <select name="{{ key }}" id="{{ key }}" form="{{ key }}" onchange="this.form.submit()">
+                
+                <div>    
+                <select name="{{ key }}" id="{{ key }}" form="{{ key }}" onchange="this.form.submit(); showProgressBar()">
+                        <option disabled selected>select from the menu</option>
                         {% for i in value %}
                             <option value="{{ i }}">{{ i }}</option>
                         {% endfor %}
                     </select>
                 </div>
+                
                 </form>
-
+                </div>
             {% endfor %}
+
+ 
             
+
+        
+        </div>
+                   
+        <div class="container d-flex flex-row flex-wrap justify-content-center align-items-center text-center mt-3"> 
+            <div class="col-6 col-md-4 col-lg-3 p-2">
+                <div class="bs-component" id="loading" hidden="hidden">
+                    <p>Loading Pokemon ...</p>
+                </div>
+            </div>
         </div>
 
     {% endblock %}
 </body>
-</html>

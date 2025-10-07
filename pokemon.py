@@ -18,51 +18,48 @@ def get_attributes(attribute):
     return attributes_list
     
 def get_list_by_attribute(attribute, selection):
+
+    print(BASE_URL + POKEMON_ATTRIBUTES[attribute] + '/' + selection)
     
     response = requests.get(BASE_URL + POKEMON_ATTRIBUTES[attribute] + '/' + selection)
 
-    pokemon_list = [item['pokemon']['name'] for item in response.json()['pokemon']]
+    response_json = response.json()
+
+    if 'pokemon' not in response_json.keys():
+        pokemon_list = [item['name'] for item in response_json['pokemon_species']]
+    else:
+        pokemon_list = [item['pokemon']['name'] for item in response_json['pokemon']]
 
     return pokemon_list
 
 def get_pokemon_by_name(name):
 
+    print(BASE_URL + 'pokemon/' + name)
+
     response = requests.get(BASE_URL + 'pokemon/' + name)
 
-    response_json = response.json()
-
-    pokemon = {'id': response_json['id'],
-                'name': response_json['name'],
-                'types': [item['type']['name'] for item in response_json['types']],
-                'abilities': [item['ability']['name'] for item in response_json['abilities']],
-                'image_url': response_json['sprites']['front_default']}
+    try:
+        response_json = response.json()
+        pokemon = {'id': response_json['id'],
+            'name': response_json['name'],
+            'types': [item['type']['name'] for item in response_json['types']],
+            'abilities': [item['ability']['name'] for item in response_json['abilities']],
+            'image_url': response_json['sprites']['front_default'],
+            'description': get_pokemon_description(response_json['name'])}
+        return pokemon
     
-    return pokemon
+    except requests.exceptions.JSONDecodeError:
+        print(f"{name} is a pokemon species and not a pokemon lol")
 
-def get_pokemon_characteristics_by_id(pokemon):
+def get_pokemon_description(pokemon):
 
-    response = requests.get(BASE_URL + 'pokemon-species/' + pokemon['name'])
+    response = requests.get(BASE_URL + 'pokemon-species/' + pokemon)
 
     response_json = response.json()
 
-    description = next(filter(lambda x: x['version']['name'] == 'firered', response_json['flavor_text_entries']), None)
+    description = next(filter(lambda x: x['language']['name'] == 'en', response_json['flavor_text_entries']), None)['flavor_text'].replace('\n', ' ')
 
-    pokemon.update({'description': description['flavor_text'].replace('\n', ' '),
-                    'color': response_json['color']['name']}) 
-
-    return pokemon
-
-print(get_attributes('type'))
-
-# test = get_list_by_attribute('type', 'ground')
-
-test_pokemon = get_pokemon_by_name('eevee')
-
-test_test_pokemon = get_pokemon_characteristics_by_id(test_pokemon)
-
-print(test_pokemon)
-
-print('****', test_test_pokemon)
+    return description
 
 
 

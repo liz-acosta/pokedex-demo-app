@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
-    <title>Minimal Flask App</title>
-</head>
+{% extends 'base.html' %}
 <body>
+    {% block content %}
 
-    {% for pokemon in pokemon_list %}
-    {{ pokemon }}
-    {% endfor %}
+    <div class="container d-flex flex-row flex-wrap justify-content-center align-items-center text-center mt-3">       
+            
+            {% for pokemon in pokemon_dict_list %}
+            <div class="col-6 col-md-4 col-lg-3 p-2">
+                <div>{{ pokemon.name }}</div>
+                <div><img src="{{ pokemon.image_url }}" alt="Oops! This Pokemon has run away!"></div>
+                <div>{{ pokemon.description }}</div>
+            </div>    
+            {% endfor %}
+            
+    </div>
+
+    {% endblock %}
+
 </body>
-</html>
