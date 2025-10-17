@@ -1,56 +1,40 @@
-# flask-minimal
+# Pokedex demo app
 
-A minimal Flask starter project designed to help you quickly set up a clean, simple, and efficient web application. This project is structured to keep things lightweight and focuses on productivity, with all your code contained in a single file (`app.py`), along with basic templates and static assets.
+This is a simple Flask app that enables users to view Pokemon according to the following attributes: Ability, Color, or Type.
 
-## Features
-- Single-file Flask application (`app.py`) to maximize productivity and simplicity.
-- Basic HTML template structure with minimal styling and JavaScript.
-- Simple and intuitive project setup with no unnecessary complexity.
-- Easily customizable for rapid development of web applications.
+## Prerequisites
 
-## Installation
+* Python 3.11+
+* Some familiarity with [Jupyter notebooks](https://jupyter.org/install)
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/flask-minimal.git
-   cd flask-minimal
-   ```
+## Running the Flask app
 
-2. Create a virtual environment (recommended):
-   ```bash
-   python3 -m venv .venv
-   source venv/bin/activate
-   ```
+1. Create a virtual environment: `virtualenv venv`
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+2. Activate the virtual environment: `source venv/bin/activate`
 
-4. Run the app:
-   ```bash
-   python app.py
-   ```
+3. Install the required depedencies: `pip install -r requirements.txt` 
+
+4. Run the app: `flask run`
 
 The Flask app will start, and you can view it by navigating to http://localhost:5000 in your browser.
 
-## Usage
+## Running the Jupyter notebook
 
-This starter project is ready to be used as a foundation for building web applications. The app.py file contains all the Flask routes and logic, making it simple to expand and customize. You can add more templates, routes, or static files as needed.
+1. Install Jupyter: `pip3 install jupyter`
 
-## Customization
-You can easily modify:
+2. Run the notebook: `jupyter notebook`
 
- - The HTML structure in `templates/index.html`
- - The styling in `static/style.css`
- - The interactivity in `static/script.js`
+The Jupyter server will start and automatically open a new browswer tab.
 
-Feel free to update the app.py file to add your routes or any additional logic to fit your needs.
+## Running and viewing the coverage report
 
-## License
-This project is licensed under the MIT License.
+1. Analyze the code for coverage: `coverage run -m unittest`
 
-## Contributing
-Feel free to fork this repository and create pull requests if you have improvements or bug fixes. If you have any suggestions, open an issue, and we’ll discuss it!
+2. View the coverage report: `coverage report`
 
-This project is built with simplicity and efficiency in mind, perfect for quickly starting small web apps or prototypes with minimal overhead.
+## Running the tests
+
+1. Run the tests: `python -m unittest`
+
+

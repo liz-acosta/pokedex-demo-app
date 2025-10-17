@@ -2,3 +2,5 @@
 __pycache__/
 .DS_Store
 *.sqlite3
+.ipynb_checkpoints/test_pokemon-checkpoint.ipynb
+.coverage
